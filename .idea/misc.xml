@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/activity_firebase_ui.xml" value="0.1" />
         <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/activity_main.xml" value="0.14130434782608695" />
+        <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/fragment_dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
       </map>
     </option>
   </component>
