@@ -1,6 +1,7 @@
 package com.example.google_solution_challenge
 
 //import com.google.firebase.quickstart.auth.R
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -43,7 +44,9 @@ class LogInActivity : AppCompatActivity() {
                         .addOnCompleteListener{
                             task ->
                             if(task.isSuccessful){
-                                // TODO: direct to main page
+                                val intent = Intent(this, FirstActivity::class.java)
+                                //TODO: pass in user data
+                                startActivity(intent)
                             }
                             else{
                                 Toast.makeText(
