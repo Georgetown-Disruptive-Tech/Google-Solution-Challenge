@@ -5,9 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstActivity">
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.example.google_solution_challenge.UniversityFragment" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.example.google_solution_challenge.QuestionFragment" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

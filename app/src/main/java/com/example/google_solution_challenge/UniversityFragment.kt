@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import com.example.google_solution_challenge.databinding.FragmentUniversityBinding
 
 
 class UniversityFragment : Fragment(R.layout.fragment_university) {
