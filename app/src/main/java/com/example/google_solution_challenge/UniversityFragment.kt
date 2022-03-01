@@ -1,5 +1,6 @@
 package com.example.google_solution_challenge
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,8 +18,18 @@ class UniversityFragment : Fragment(R.layout.fragment_university) {
     lateinit var autoCompleteTextView: AutoCompleteTextView
     lateinit var continueButton : Button
     var selected = ""
+    var callbackFragment : CallbackFragment ?= null
+    override fun onAttach(context: Context) {
+        //sharedPreferences = context.getSharedPreferences("usersFile", context.MODE_PRIVATE)
+        //editor = sharedPreferences.edit()
+        super.onAttach(context)
+        callbackFragment = try {
+            context as CallbackFragment
+        } catch (e: ClassCastException) {
+            throw ClassCastException("$context must implement CallbackFragment")
+        }
 
-
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +60,11 @@ class UniversityFragment : Fragment(R.layout.fragment_university) {
 
             }
         })
+        continueButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(p0: View?) {
+                callbackFragment?.changeFragment()
+            }
+        })
         // Inflate the layout for this fragment
         return view
     }
@@ -58,8 +74,5 @@ class UniversityFragment : Fragment(R.layout.fragment_university) {
 
     }
 
-    fun onContinue(view: View)
-    {
-        //proceed to next screen with the selected university.
-    }
+
 }
