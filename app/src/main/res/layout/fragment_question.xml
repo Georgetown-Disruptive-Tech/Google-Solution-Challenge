@@ -72,21 +72,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer3" />
 
-    <View
-        android:id="@+id/bar"
-        android:layout_width="414dp"
-        android:layout_height="113dp"
-        android:layout_marginBottom="48dp"
-        android:background="#3F51B5"
-        app:layout_constraintBottom_toTopOf="@+id/promptQuestion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
+    <Button
         android:id="@+id/question1"
         android:layout_width="99dp"
         android:layout_height="113dp"
+        android:backgroundTint="#94CEF3"
         android:text="1"
         android:textAlignment="center"
         android:textSize="60sp"
@@ -96,10 +86,11 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/question2"
         android:layout_width="99dp"
         android:layout_height="113dp"
+        android:backgroundTint="#82D0F7"
         android:text="2"
         android:textAlignment="center"
         android:textSize="60sp"
@@ -109,10 +100,11 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/question3"
         android:layout_width="99dp"
         android:layout_height="113dp"
+        android:backgroundTint="#82D0F7"
         android:text="3"
         android:textAlignment="center"
         android:textSize="60sp"
@@ -122,10 +114,11 @@
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <Button
         android:id="@+id/question4"
         android:layout_width="99dp"
         android:layout_height="113dp"
+        android:backgroundTint="#82D0F7"
         android:text="4"
         android:textAlignment="center"
         android:textSize="60sp"
