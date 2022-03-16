@@ -86,6 +86,26 @@ class QuestionFragment : Fragment() {
                 onAnswer()
             }
         })
+        question1.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(p0: View?) {
+                changeQuestion(1)
+            }
+        })
+        question2.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(p0: View?) {
+                changeQuestion(2)
+            }
+        })
+        question3.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(p0: View?) {
+                changeQuestion(3)
+            }
+        })
+        question4.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(p0: View?) {
+                changeQuestion(4)
+            }
+        })
         return view
     }
 
@@ -95,28 +115,68 @@ class QuestionFragment : Fragment() {
             page = 2
             question1.setTextColor(Color.WHITE)
             question2.setTextColor(Color.BLACK)
-
+            if(answerArray[1] != -1)
+            {
+                resetColor()
+                when(answerArray[1]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
+                }
+            }
         }
         else if (page == 2)
         {
             page = 3
             question2.setTextColor(Color.WHITE)
             question3.setTextColor(Color.BLACK)
+            if(answerArray[2] != -1)
+            {
+                resetColor()
+                when(answerArray[2]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
+                }
+            }
         }
         else if (page == 3)
         {
             page = 4
             question3.setTextColor(Color.WHITE)
             question4.setTextColor(Color.BLACK)
+            if(answerArray[3] != -1)
+            {
+                resetColor()
+                when(answerArray[3]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
+                }
+            }
         }
     }
-    fun changeQuestion(view: View){
-        if(view.id == R.id.answer1)
+    fun resetColor(){
+        answer1.setBackgroundColor(Color.parseColor("#F1B100"))
+        answer2.setBackgroundColor(Color.parseColor("#F1B100"))
+        answer3.setBackgroundColor(Color.parseColor("#F1B100"))
+        answer4.setBackgroundColor(Color.parseColor("#F1B100"))
+    }
+    fun changeQuestion(num: Int){
+        System.out.println("lol")
+        if(num == 1)
         {
-            if( page != 1){
+                question1.setTextColor(Color.BLACK)
+                question2.setTextColor(Color.WHITE)
+                question3.setTextColor(Color.WHITE)
+                question4.setTextColor(Color.WHITE)
                 page = 1
                 if(answerArray[0] != -1)
                 {
+                    resetColor()
                     when(answerArray[0]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
@@ -124,15 +184,18 @@ class QuestionFragment : Fragment() {
                         3->answer4.setBackgroundColor(Color.BLUE)
                     }
                 }
-            }
         }
-        else if(view.id == R.id.answer2)
+        else if(num == 2)
         {
-            if(page >= 2)
-            {
+
+                question2.setTextColor(Color.BLACK)
+                question1.setTextColor(Color.WHITE)
+                question3.setTextColor(Color.WHITE)
+                question4.setTextColor(Color.WHITE)
                 page = 2
                 if(answerArray[1] != -1)
                 {
+                    resetColor()
                     when(answerArray[1]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
@@ -140,21 +203,42 @@ class QuestionFragment : Fragment() {
                         3->answer4.setBackgroundColor(Color.BLUE)
                     }
                 }
-            }
         }
-        else if(view.id == R.id.answer3)
+        else if(num == 3)
         {
-            if(page >= 3)
-            {
+
+                question3.setTextColor(Color.BLACK)
+                question1.setTextColor(Color.WHITE)
+                question2.setTextColor(Color.WHITE)
+                question4.setTextColor(Color.WHITE)
                 page = 3
                 if(answerArray[2] != -1)
                 {
+                    resetColor()
                     when(answerArray[2]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
                         2->answer3.setBackgroundColor(Color.BLUE)
                         3->answer4.setBackgroundColor(Color.BLUE)
                     }
+                }
+        }
+        else if(num == 4)
+        {
+
+            question4.setTextColor(Color.BLACK)
+            question1.setTextColor(Color.WHITE)
+            question2.setTextColor(Color.WHITE)
+            question3.setTextColor(Color.WHITE)
+            page = 4
+            if(answerArray[3] != -1)
+            {
+                resetColor()
+                when(answerArray[3]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
                 }
             }
         }
