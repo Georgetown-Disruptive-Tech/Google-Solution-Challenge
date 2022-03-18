@@ -11,6 +11,9 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class UniversityFragment : Fragment(R.layout.fragment_university) {
@@ -38,14 +41,16 @@ class UniversityFragment : Fragment(R.layout.fragment_university) {
         autoCompleteTextView = view.findViewById(R.id.options)
         continueButton = view.findViewById(R.id.continueButton)
 
-        val items = resources.getStringArray(R.array.universities)
+        val db = Firebase.firestore
+        val uniResources = db.collection("university-resources")
+        val items = getListOfUniversities(uniResources)
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
-        continueButton.setVisibility(View.INVISIBLE)
+        continueButton.visibility = View.INVISIBLE
         autoCompleteTextView.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 selected = s.toString()
-                continueButton.setVisibility(View.VISIBLE)
+                continueButton.visibility = View.VISIBLE
             }
 
             override fun beforeTextChanged(
@@ -60,18 +65,25 @@ class UniversityFragment : Fragment(R.layout.fragment_university) {
 
             }
         })
-        continueButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                callbackFragment?.changeFragment()
-            }
-        })
+        continueButton.setOnClickListener { callbackFragment?.changeFragment() }
         // Inflate the layout for this fragment
+
         return view
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
+    }
+
+    private fun getListOfUniversities(collection: CollectionReference) : MutableList<String> {
+        val res = mutableListOf<String>()
+        collection.get().addOnSuccessListener { querySnapshot ->
+            querySnapshot.forEach { document ->
+                res.add(document.data["Name"] as String)
+            }
+        }
+        return res
     }
 
 

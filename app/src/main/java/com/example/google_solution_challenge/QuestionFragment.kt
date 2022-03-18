@@ -2,12 +2,17 @@ package com.example.google_solution_challenge
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 
 class QuestionFragment : Fragment() {
@@ -23,7 +28,12 @@ class QuestionFragment : Fragment() {
     lateinit var question4 : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val db = Firebase.firestore
+        val daily = db.collection("daily-questions")
+        val rotational = db.collection("rotational-questions")
+        val triggered = db.collection("triggered-questions")
+        val q = getRandomQuestion(daily)
+        // TODO: retrieve and display the questions
     }
 
     override fun onCreateView(
@@ -245,5 +255,28 @@ class QuestionFragment : Fragment() {
 
 
     }
-
+    private fun getRandomQuestion(collection: CollectionReference): QueryDocumentSnapshot? {
+        val key = collection.document().id
+        var doc : QueryDocumentSnapshot? = null
+        val ls = collection.get()
+            .addOnSuccessListener { querySnapshot ->
+                val idx = Random.nextInt() % querySnapshot.size()
+                var i = 0
+                for(document in querySnapshot){
+                    if(i == idx){
+                        doc = document
+                        break
+                    }
+                    i += 1
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    activity,
+                    "Error getting documents $exception",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        return doc
+    }
 }
