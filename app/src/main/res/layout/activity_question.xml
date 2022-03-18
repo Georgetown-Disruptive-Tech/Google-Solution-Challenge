@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
 
         android:layout_marginStart="100dp"
-        android:layout_marginTop="161dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="100dp"
         android:text="What can we help you with today?"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,60 +77,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/answer3" />
 
-    <Button
-        android:id="@+id/question1"
-        android:layout_width="99dp"
-        android:layout_height="113dp"
-        android:backgroundTint="#94CEF3"
-        android:text="1"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.006"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/question2"
-        android:layout_width="99dp"
-        android:layout_height="113dp"
-        android:backgroundTint="#82D0F7"
-        android:text="2"
-        android:textAlignment="center"
-        android:textSize="60sp"
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/question3"
-        android:layout_width="99dp"
-        android:layout_height="113dp"
-        android:backgroundTint="#82D0F7"
-        android:text="3"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/question1"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
 
-    <Button
-        android:id="@+id/question4"
-        android:layout_width="99dp"
-        android:layout_height="113dp"
-        android:backgroundTint="#82D0F7"
-        android:text="4"
-        android:textAlignment="center"
-        android:textSize="60sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:layout_weight="1"
+            android:backgroundTint="#94CEF3"
+            android:text="1"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/question2"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+
+            android:layout_weight="1"
+            android:backgroundTint="#82D0F7"
+            android:text="2"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/question3"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+
+            android:layout_weight="1"
+            android:backgroundTint="#82D0F7"
+            android:text="3"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/question4"
+            android:layout_width="100dp"
+            android:layout_height="110dp"
+            android:layout_weight="1"
+            android:backgroundTint="#82D0F7"
+            android:text="4"
+            android:textAlignment="center"
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
