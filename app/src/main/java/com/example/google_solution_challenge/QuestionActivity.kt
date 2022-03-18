@@ -29,6 +29,7 @@ class QuestionActivity : AppCompatActivity() {
     lateinit var question2 : Button
     lateinit var question3 : Button
     lateinit var question4 : Button
+    lateinit var text: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
@@ -37,6 +38,7 @@ class QuestionActivity : AppCompatActivity() {
         val rotational = db.collection("rotational-questions")
         val triggered = db.collection("triggered-questions")
         val q = getRandomQuestion(daily)
+        text = findViewById(R.id.promptQuestion)
         answer1 = findViewById(R.id.answer1)
         answer2 = findViewById(R.id.answer2)
         answer3 = findViewById(R.id.answer3)
@@ -173,10 +175,10 @@ class QuestionActivity : AppCompatActivity() {
                 }
             }
             var intent = Intent(this, ResourceActivity::class.java)
-            intent.putExtra("Q1", answerArray[0])
-            intent.putExtra("Q2", answerArray[1])
-            intent.putExtra("Q3", answerArray[2])
-            intent.putExtra("Q4", answerArray[3])
+            intent.putExtra(text.text.toString(), answerArray[0])
+            intent.putExtra(text.text.toString(), answerArray[1])
+            intent.putExtra(text.text.toString(), answerArray[2])
+            intent.putExtra(text.text.toString(), answerArray[3])
             startActivity(intent)
 
         }
@@ -190,59 +192,59 @@ class QuestionActivity : AppCompatActivity() {
     fun changeQuestion(num: Int){
         if(num == 1)
         {
-                question1.setTextColor(Color.BLACK)
-                question2.setTextColor(Color.WHITE)
-                question3.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 1
-                if(answerArray[0] != -1)
-                {
-                    resetColor()
-                    when(answerArray[0]){
-                        0->answer1.setBackgroundColor(Color.BLUE)
-                        1->answer2.setBackgroundColor(Color.BLUE)
-                        2->answer3.setBackgroundColor(Color.BLUE)
-                        3->answer4.setBackgroundColor(Color.BLUE)
-                    }
+            question1.setTextColor(Color.BLACK)
+            question2.setTextColor(Color.WHITE)
+            question3.setTextColor(Color.WHITE)
+            question4.setTextColor(Color.WHITE)
+            page = 1
+            if(answerArray[0] != -1)
+            {
+                resetColor()
+                when(answerArray[0]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
                 }
+            }
         }
         else if(num == 2)
         {
 
-                question2.setTextColor(Color.BLACK)
-                question1.setTextColor(Color.WHITE)
-                question3.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 2
-                if(answerArray[1] != -1)
-                {
-                    resetColor()
-                    when(answerArray[1]){
-                        0->answer1.setBackgroundColor(Color.BLUE)
-                        1->answer2.setBackgroundColor(Color.BLUE)
-                        2->answer3.setBackgroundColor(Color.BLUE)
-                        3->answer4.setBackgroundColor(Color.BLUE)
-                    }
+            question2.setTextColor(Color.BLACK)
+            question1.setTextColor(Color.WHITE)
+            question3.setTextColor(Color.WHITE)
+            question4.setTextColor(Color.WHITE)
+            page = 2
+            if(answerArray[1] != -1)
+            {
+                resetColor()
+                when(answerArray[1]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
                 }
+            }
         }
         else if(num == 3)
         {
 
-                question3.setTextColor(Color.BLACK)
-                question1.setTextColor(Color.WHITE)
-                question2.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 3
-                if(answerArray[2] != -1)
-                {
-                    resetColor()
-                    when(answerArray[2]){
-                        0->answer1.setBackgroundColor(Color.BLUE)
-                        1->answer2.setBackgroundColor(Color.BLUE)
-                        2->answer3.setBackgroundColor(Color.BLUE)
-                        3->answer4.setBackgroundColor(Color.BLUE)
-                    }
+            question3.setTextColor(Color.BLACK)
+            question1.setTextColor(Color.WHITE)
+            question2.setTextColor(Color.WHITE)
+            question4.setTextColor(Color.WHITE)
+            page = 3
+            if(answerArray[2] != -1)
+            {
+                resetColor()
+                when(answerArray[2]){
+                    0->answer1.setBackgroundColor(Color.BLUE)
+                    1->answer2.setBackgroundColor(Color.BLUE)
+                    2->answer3.setBackgroundColor(Color.BLUE)
+                    3->answer4.setBackgroundColor(Color.BLUE)
                 }
+            }
         }
         else if(num == 4)
         {
