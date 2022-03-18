@@ -1,5 +1,6 @@
 package com.example.google_solution_challenge
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,9 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 
-class QuestionFragment : Fragment() {
+class QuestionActivity : AppCompatActivity() {
     var page = 1
     var answerArray = arrayOf(-1, -1, -1, -1)
     lateinit var answer1 : Button
@@ -23,23 +25,15 @@ class QuestionFragment : Fragment() {
     lateinit var question4 : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view : View = inflater.inflate(R.layout.fragment_question, container, false)
-        answer1 = view.findViewById(R.id.answer1)
-        answer2 = view.findViewById(R.id.answer2)
-        answer3 = view.findViewById(R.id.answer3)
-        answer4 = view.findViewById(R.id.answer4)
-        question1 = view.findViewById(R.id.question1)
-        question2 = view.findViewById(R.id.question2)
-        question3 = view.findViewById(R.id.question3)
-        question4 = view.findViewById(R.id.question4)
+        setContentView(R.layout.activity_question)
+        answer1 = findViewById(R.id.answer1)
+        answer2 = findViewById(R.id.answer2)
+        answer3 = findViewById(R.id.answer3)
+        answer4 = findViewById(R.id.answer4)
+        question1 = findViewById(R.id.question1)
+        question2 = findViewById(R.id.question2)
+        question3 = findViewById(R.id.question3)
+        question4 = findViewById(R.id.question4)
         question1.setTextColor(Color.BLACK)
         answer1.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
@@ -106,7 +100,6 @@ class QuestionFragment : Fragment() {
                 changeQuestion(4)
             }
         })
-        return view
     }
 
     fun onAnswer()
@@ -157,6 +150,21 @@ class QuestionFragment : Fragment() {
                     3->answer4.setBackgroundColor(Color.BLUE)
                 }
             }
+        }
+        else if (page == 4)
+        {
+            for (i in answerArray){
+                if (i == -1){
+                    return
+                }
+            }
+            var intent = Intent(this, ResourceActivity::class.java)
+            intent.putExtra("Q1", answerArray[0])
+            intent.putExtra("Q2", answerArray[1])
+            intent.putExtra("Q3", answerArray[2])
+            intent.putExtra("Q4", answerArray[3])
+            startActivity(intent)
+
         }
     }
     fun resetColor(){

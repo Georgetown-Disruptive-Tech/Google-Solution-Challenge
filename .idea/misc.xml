@@ -10,14 +10,20 @@
         <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/Miles Reynolds/AndroidStudioProjects/GoogleSolutionChallenge/app/src/main/res/layout/fragment_notifications.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_first.xml" value="0.27929382324218754" />
+        <entry key="app/src/main/res/layout/activity_journal.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/activity_log_in.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2341262817382813" />
+        <entry key="app/src/main/res/layout/activity_question.xml" value="0.134375" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1259259259259259" />
+        <entry key="app/src/main/res/layout/activity_resource.xml" value="0.21367617006655093" />
+        <entry key="app/src/main/res/layout/activity_university.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/fragment_question.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_university.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2786458333333333" />
       </map>
     </option>
   </component>

@@ -44,7 +44,7 @@ class LogInActivity : AppCompatActivity() {
                         .addOnCompleteListener{
                             task ->
                             if(task.isSuccessful){
-                                val intent = Intent(this, FirstActivity::class.java)
+                                val intent = Intent(this, UniversityActivity::class.java)
                                 //TODO: pass in user data
                                 startActivity(intent)
                             }
