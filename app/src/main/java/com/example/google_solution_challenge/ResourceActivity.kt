@@ -32,7 +32,9 @@ class ResourceActivity : AppCompatActivity() {
     } //end onOptionsItemSelected
     fun onClick(view: View)
     {
-
+        intent = getIntent()
+        intent.setClass(this, JournalActivity::class.java)
+        startActivity(intent)
     }
 
 

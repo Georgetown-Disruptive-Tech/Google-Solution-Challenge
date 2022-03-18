@@ -1,6 +1,7 @@
 package com.example.google_solution_challenge
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +11,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-
-
+import com.example.hw5.Answer
+import java.lang.Exception
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
+lateinit var sharedPreferences :SharedPreferences
+var answerList = ArrayList<Answer>()
 class QuestionActivity : AppCompatActivity() {
     var page = 1
-    var answerArray = arrayOf(-1, -1, -1, -1)
+
+    var temp = "What can we help you with today?"
+    var questionArray = arrayOf(temp + " - Q1", temp + " - Q2", temp + " - Q3", temp + " - Q4")
+    var answerIndex = arrayOf(-1, -1, -1, -1)
+    var answerArray = arrayOf("null", "null", "null", "null")
     lateinit var answer1 : Button
     lateinit var answer2 : Button
     lateinit var answer3 : Button
@@ -28,6 +39,7 @@ class QuestionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
         text = findViewById(R.id.promptQuestion)
+        text.setText(questionArray[0])
         answer1 = findViewById(R.id.answer1)
         answer2 = findViewById(R.id.answer2)
         answer3 = findViewById(R.id.answer3)
@@ -40,10 +52,26 @@ class QuestionActivity : AppCompatActivity() {
         answer1.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 when (page){
-                    1-> answerArray[0] = 0
-                    2->answerArray[1] = 0
-                    3->answerArray[2] = 0
-                    4->answerArray[3] = 0
+                    1->
+                    {
+                        answerIndex[0] = 0
+                        answerArray[0] = answer1.text.toString()
+                    }
+                    2->
+                    {
+                        answerIndex[1] = 0
+                        answerArray[1] = answer1.text.toString()
+                    }
+                    3->
+                    {
+                        answerIndex[2] = 0
+                        answerArray[2] = answer1.text.toString()
+                    }
+                    4->
+                    {
+                        answerIndex[3] = 0
+                        answerArray[3] = answer1.text.toString()
+                    }
                 }
                 onAnswer()
             }
@@ -52,10 +80,26 @@ class QuestionActivity : AppCompatActivity() {
             override fun onClick(p0: View?) {
 
                 when (page){
-                    1-> answerArray[0] = 1
-                    2->answerArray[1] = 1
-                    3->answerArray[2] = 1
-                    4->answerArray[3] = 1
+                    1->
+                    {
+                        answerIndex[0] = 1
+                        answerArray[0] = answer2.text.toString()
+                    }
+                    2->
+                    {
+                        answerIndex[1] = 1
+                        answerArray[1] = answer2.text.toString()
+                    }
+                    3->
+                    {
+                        answerIndex[2] = 1
+                        answerArray[2] = answer2.text.toString()
+                    }
+                    4->
+                    {
+                        answerIndex[3] = 1
+                        answerArray[3] = answer2.text.toString()
+                    }
                 }
                 onAnswer()
             }
@@ -63,10 +107,26 @@ class QuestionActivity : AppCompatActivity() {
         answer3.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 when (page){
-                    1-> answerArray[0] = 2
-                    2->answerArray[1] = 2
-                    3->answerArray[2] = 2
-                    4->answerArray[3] = 2
+                    1->
+                    {
+                        answerIndex[0] = 2
+                        answerArray[0] = answer3.text.toString()
+                    }
+                    2->
+                    {
+                        answerIndex[1] = 2
+                        answerArray[1] = answer3.text.toString()
+                    }
+                    3->
+                    {
+                        answerIndex[2] = 2
+                        answerArray[2] = answer3.text.toString()
+                    }
+                    4->
+                    {
+                        answerIndex[3] = 2
+                        answerArray[3] = answer3.text.toString()
+                    }
                 }
                 onAnswer()
             }
@@ -74,10 +134,26 @@ class QuestionActivity : AppCompatActivity() {
         answer4.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 when (page){
-                    1-> answerArray[0] = 3
-                    2->answerArray[1] = 3
-                    3->answerArray[2] = 3
-                    4->answerArray[3] = 3
+                    1->
+                    {
+                        answerIndex[0] = 3
+                        answerArray[0] = answer4.text.toString()
+                    }
+                    2->
+                    {
+                        answerIndex[1] = 3
+                        answerArray[1] = answer4.text.toString()
+                    }
+                    3->
+                    {
+                        answerIndex[2] = 3
+                        answerArray[2] = answer4.text.toString()
+                    }
+                    4->
+                    {
+                        answerIndex[3] = 3
+                        answerArray[3] = answer4.text.toString()
+                    }
                 }
                 onAnswer()
             }
@@ -103,17 +179,20 @@ class QuestionActivity : AppCompatActivity() {
             }
         })
     }
-
+    fun updateQuestion(){
+        text.setText(questionArray[page-1])
+    }
     fun onAnswer()
     {
         if(page == 1){
             page = 2
+            updateQuestion()
             question1.setTextColor(Color.WHITE)
             question2.setTextColor(Color.BLACK)
-            if(answerArray[1] != -1)
+            if(answerIndex[1] != -1)
             {
                 resetColor()
-                when(answerArray[1]){
+                when(answerIndex[1]){
                     0->answer1.setBackgroundColor(Color.BLUE)
                     1->answer2.setBackgroundColor(Color.BLUE)
                     2->answer3.setBackgroundColor(Color.BLUE)
@@ -124,12 +203,13 @@ class QuestionActivity : AppCompatActivity() {
         else if (page == 2)
         {
             page = 3
+            updateQuestion()
             question2.setTextColor(Color.WHITE)
             question3.setTextColor(Color.BLACK)
-            if(answerArray[2] != -1)
+            if(answerIndex[2] != -1)
             {
                 resetColor()
-                when(answerArray[2]){
+                when(answerIndex[2]){
                     0->answer1.setBackgroundColor(Color.BLUE)
                     1->answer2.setBackgroundColor(Color.BLUE)
                     2->answer3.setBackgroundColor(Color.BLUE)
@@ -140,12 +220,13 @@ class QuestionActivity : AppCompatActivity() {
         else if (page == 3)
         {
             page = 4
+            updateQuestion()
             question3.setTextColor(Color.WHITE)
             question4.setTextColor(Color.BLACK)
-            if(answerArray[3] != -1)
+            if(answerIndex[3] != -1)
             {
                 resetColor()
-                when(answerArray[3]){
+                when(answerIndex[3]){
                     0->answer1.setBackgroundColor(Color.BLUE)
                     1->answer2.setBackgroundColor(Color.BLUE)
                     2->answer3.setBackgroundColor(Color.BLUE)
@@ -155,16 +236,32 @@ class QuestionActivity : AppCompatActivity() {
         }
         else if (page == 4)
         {
-            for (i in answerArray){
+            for (i in answerIndex){
                 if (i == -1){
                     return
                 }
             }
             var intent = Intent(this, ResourceActivity::class.java)
-            intent.putExtra(text.text.toString(), answerArray[0])
-            intent.putExtra(text.text.toString(), answerArray[1])
-            intent.putExtra(text.text.toString(), answerArray[2])
-            intent.putExtra(text.text.toString(), answerArray[3])
+            // store data
+            for (i in (0..3))
+            {
+                var answer = Answer(LocalDate.now().toString(), questionArray[i], answerArray[i])
+                answerList.add(answer)
+            }
+            sharedPreferences = getSharedPreferences("com.example.google_solution_challenge", MODE_PRIVATE)
+            //before storing data, read them first
+            var stored = ArrayList<Answer>()
+            try {
+                stored = ObjectSerializer.deserialize(
+                    sharedPreferences
+                        .getString("answers", ObjectSerializer.serialize(ArrayList<Answer>()))
+                ) as ArrayList<Answer>
+            }
+            catch (e: Exception){
+                System.out.println("No data stored... proceeding")
+            }
+            answerList.addAll(stored)
+            sharedPreferences.edit().putString("answers", ObjectSerializer.serialize(answerList)).apply()
             startActivity(intent)
 
         }
@@ -184,10 +281,11 @@ class QuestionActivity : AppCompatActivity() {
                 question3.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
                 page = 1
-                if(answerArray[0] != -1)
+                updateQuestion()
+                if(answerIndex[0] != -1)
                 {
                     resetColor()
-                    when(answerArray[0]){
+                    when(answerIndex[0]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
                         2->answer3.setBackgroundColor(Color.BLUE)
@@ -203,10 +301,11 @@ class QuestionActivity : AppCompatActivity() {
                 question3.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
                 page = 2
-                if(answerArray[1] != -1)
+                updateQuestion()
+                if(answerIndex[1] != -1)
                 {
                     resetColor()
-                    when(answerArray[1]){
+                    when(answerIndex[1]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
                         2->answer3.setBackgroundColor(Color.BLUE)
@@ -222,10 +321,11 @@ class QuestionActivity : AppCompatActivity() {
                 question2.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
                 page = 3
-                if(answerArray[2] != -1)
+                updateQuestion()
+                if(answerIndex[2] != -1)
                 {
                     resetColor()
-                    when(answerArray[2]){
+                    when(answerIndex[2]){
                         0->answer1.setBackgroundColor(Color.BLUE)
                         1->answer2.setBackgroundColor(Color.BLUE)
                         2->answer3.setBackgroundColor(Color.BLUE)
@@ -241,10 +341,11 @@ class QuestionActivity : AppCompatActivity() {
             question2.setTextColor(Color.WHITE)
             question3.setTextColor(Color.WHITE)
             page = 4
-            if(answerArray[3] != -1)
+            updateQuestion()
+            if(answerIndex[3] != -1)
             {
                 resetColor()
-                when(answerArray[3]){
+                when(answerIndex[3]){
                     0->answer1.setBackgroundColor(Color.BLUE)
                     1->answer2.setBackgroundColor(Color.BLUE)
                     2->answer3.setBackgroundColor(Color.BLUE)
