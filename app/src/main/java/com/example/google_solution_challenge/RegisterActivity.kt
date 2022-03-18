@@ -26,13 +26,6 @@ class RegisterActivity : AppCompatActivity() {
         val repeatPassword = findViewById<EditText>(R.id.repeatPassword)
         val btn = findViewById<Button>(R.id.registerButton)
         btn.setOnClickListener {
-            if(newPassword.text != repeatPassword.text){
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Password Mismatch",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
             when{
                 TextUtils.isEmpty(emailReg.text.toString().trim()) -> {
                     Toast.makeText(
@@ -45,6 +38,13 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(
                         this@RegisterActivity,
                         "Please enter password",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                newPassword.text != repeatPassword.text -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Password Mismatch",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
