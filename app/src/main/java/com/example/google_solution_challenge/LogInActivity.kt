@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,11 @@ class LogInActivity : AppCompatActivity() {
         val btnLogIn = findViewById<Button>(R.id.logInButton)
         val emailLogIn = findViewById<EditText>(R.id.editTextTextEmailAddress)
         val passwordLogIn = findViewById<EditText>(R.id.editTextTextPassword)
+        val tapRegister = findViewById<TextView>(R.id.tapRegister)
+        tapRegister.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
         btnLogIn.setOnClickListener{
             when {
                 TextUtils.isEmpty(emailLogIn.text.toString().trim()) -> {
@@ -40,27 +46,30 @@ class LogInActivity : AppCompatActivity() {
                     // TODO: log in process
                     val email: String = emailLogIn.text.toString().trim()
                     val password: String = passwordLogIn.text.toString().trim()
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener{
-                            task ->
-                            if(task.isSuccessful){
-                                val intent = Intent(this, FirstActivity::class.java)
-                                //TODO: pass in user data
-                                startActivity(intent)
-                            }
-                            else{
-                                Toast.makeText(
-                                    this@LogInActivity,
-                                    task.exception!!.message.toString(),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
-
+                    logInUser(email, password)
                 }
             }
         }
 
+    }
+
+    private fun logInUser(email: String, password: String){
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener{
+                    task ->
+                if(task.isSuccessful){
+                    val intent = Intent(this, FirstActivity::class.java)
+                    //TODO: pass in user data
+                    startActivity(intent)
+                }
+                else{
+                    Toast.makeText(
+                        this@LogInActivity,
+                        task.exception!!.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
 }
