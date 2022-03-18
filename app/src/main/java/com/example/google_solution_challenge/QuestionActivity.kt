@@ -23,9 +23,11 @@ class QuestionActivity : AppCompatActivity() {
     lateinit var question2 : Button
     lateinit var question3 : Button
     lateinit var question4 : Button
+    lateinit var text: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+        text = findViewById(R.id.promptQuestion)
         answer1 = findViewById(R.id.answer1)
         answer2 = findViewById(R.id.answer2)
         answer3 = findViewById(R.id.answer3)
@@ -159,10 +161,10 @@ class QuestionActivity : AppCompatActivity() {
                 }
             }
             var intent = Intent(this, ResourceActivity::class.java)
-            intent.putExtra("Q1", answerArray[0])
-            intent.putExtra("Q2", answerArray[1])
-            intent.putExtra("Q3", answerArray[2])
-            intent.putExtra("Q4", answerArray[3])
+            intent.putExtra(text.text.toString(), answerArray[0])
+            intent.putExtra(text.text.toString(), answerArray[1])
+            intent.putExtra(text.text.toString(), answerArray[2])
+            intent.putExtra(text.text.toString(), answerArray[3])
             startActivity(intent)
 
         }
