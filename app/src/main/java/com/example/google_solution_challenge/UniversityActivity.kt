@@ -2,7 +2,6 @@ package com.example.google_solution_challenge
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -10,6 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class UniversityActivity : AppCompatActivity() {
@@ -23,7 +25,9 @@ class UniversityActivity : AppCompatActivity() {
         autoCompleteTextView = findViewById(R.id.options)
         continueButton = findViewById(R.id.continueButton)
 
-        val items = resources.getStringArray(R.array.universities)
+        val db = Firebase.firestore
+        val uniResources = db.collection("university-resources")
+        val items = getListOfUniversities(uniResources)
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
         continueButton.setVisibility(View.INVISIBLE)
@@ -50,6 +54,15 @@ class UniversityActivity : AppCompatActivity() {
     fun switchActivity(view : View){
         val intent = Intent(this, QuestionActivity::class.java)
         startActivity(intent)
+    }
+    private fun getListOfUniversities(collection: CollectionReference) : MutableList<String> {
+        val res = mutableListOf<String>()
+        collection.get().addOnSuccessListener { querySnapshot ->
+            querySnapshot.forEach { document ->
+                res.add(document.data["Name"] as String)
+            }
+        }
+        return res
     }
 
 }

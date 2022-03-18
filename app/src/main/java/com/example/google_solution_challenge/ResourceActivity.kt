@@ -1,12 +1,11 @@
 package com.example.google_solution_challenge
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 
 class ResourceActivity : AppCompatActivity() {
 
