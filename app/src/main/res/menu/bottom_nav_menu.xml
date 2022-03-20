@@ -4,6 +4,9 @@
     <item
         android:id="@+id/journalButton"
         android:title="Journal" />
+    <item
+        android:id="@+id/clearButton"
+        android:title="Clear Journal" />
 
 
 </menu>

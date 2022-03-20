@@ -10,13 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoogleSolutionChallenge">
         <activity
-            android:name=".JournalActivity"
-            android:exported="false" />
-        <activity
             android:name=".ResourceActivity"
             android:exported="false"
-            android:label="@string/title_activity_resource"
-            android:theme="@style/Theme.GoogleSolutionChallenge.NoActionBar" />
+            android:label="Google-Solution-Challenge" />
+        <activity
+            android:name=".JournalActivity"
+            android:exported="false"
+            android:label="Google-Solution-Challenge" />
         <activity
             android:name=".QuestionActivity"
             android:exported="true"

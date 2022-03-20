@@ -26,14 +26,16 @@ class ResourceActivity : AppCompatActivity() {
                 intent.setClass(this, JournalActivity::class.java)
                 startActivity(intent)
             }
+            R.id.clearButton -> {
+                answerList.clear()
+                sharedPreferences.edit().remove("answers").apply()
+            }
         }
         return true
     } //end onOptionsItemSelected
     fun onClick(view: View)
     {
-        intent = getIntent()
-        intent.setClass(this, JournalActivity::class.java)
-        startActivity(intent)
+
     }
 
 
