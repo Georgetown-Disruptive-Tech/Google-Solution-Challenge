@@ -335,11 +335,11 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
-    private fun getQuestions(): Array<String> {
+    private fun getQuestions(res: MutableList<String>) {
         val db = Firebase.firestore
         val daily = db.collection("daily-questions")
         val rotational = db.collection("rotational-questions")
-        val res = mutableListOf<String>()
+        res.clear()
 
         daily.get().addOnSuccessListener { querySnapshot ->
             val questions = mutableListOf<String>()
@@ -348,16 +348,13 @@ class QuestionActivity : AppCompatActivity() {
             }
             res.addAll(questions.shuffled().take(2))
             Log.d("COLLECTION", questions.shuffled().take(2).toString())
-        }
-        rotational.get().addOnSuccessListener { querySnapshot ->
-            val questions = mutableListOf<String>()
-            querySnapshot.forEach { document ->
-                questions.add(document.data["Question"] as String)
+            rotational.get().addOnSuccessListener { querySnapshot ->
+                val questions = mutableListOf<String>()
+                querySnapshot.forEach { document ->
+                    questions.add(document.data["Question"] as String)
+                }
+                res.addAll(questions.shuffled().take(2))
             }
-            res.addAll(questions.shuffled().take(2))
         }
-
-        Log.d("COLLECTION", res.toString())
-        return res.toTypedArray()
     }
 }
