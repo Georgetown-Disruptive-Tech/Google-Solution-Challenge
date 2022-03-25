@@ -16,8 +16,8 @@ import com.google.firebase.ktx.Firebase
 
 class UniversityActivity : AppCompatActivity() {
 
-    lateinit var autoCompleteTextView: AutoCompleteTextView
-    lateinit var continueButton : Button
+    private lateinit var autoCompleteTextView: AutoCompleteTextView
+    lateinit var continueButton: Button
     var selected = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +30,11 @@ class UniversityActivity : AppCompatActivity() {
         val items = getListOfUniversities(uniResources)
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
-        continueButton.setVisibility(View.INVISIBLE)
+        continueButton.visibility = View.INVISIBLE
         autoCompleteTextView.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 selected = s.toString()
-                continueButton.setVisibility(View.VISIBLE)
+                continueButton.visibility = View.VISIBLE
             }
 
             override fun beforeTextChanged(
