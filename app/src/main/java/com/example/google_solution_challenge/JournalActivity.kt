@@ -1,5 +1,6 @@
 package com.example.google_solution_challenge
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
@@ -20,12 +21,12 @@ class JournalActivity : AppCompatActivity() {
     lateinit var text: TextView
     private lateinit var calendar: CalendarView
 
-    private lateinit var sharedPreferences: SharedPreferences
     var answerList = ArrayList<Answer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
+        val sharedPreferences = getSharedPreferences("com.example.google_solution_challenge", Context.MODE_PRIVATE)
         text = findViewById(R.id.journal)
         text.text = "Journal Log\n$selectedDate"
         calendar = findViewById(R.id.calendar)
