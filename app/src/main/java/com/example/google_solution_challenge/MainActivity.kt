@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var JournalButton: Button
-    private lateinit var QuestionsButtion: Button
+    private lateinit var QuestionsButton: Button
     private lateinit var SettingsButton: Button
     private lateinit var ResourcesButton: Button
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         JournalButton = findViewById(R.id.JournalButton)
-        QuestionsButtion = findViewById(R.id.QuestionsButton)
+        QuestionsButton = findViewById(R.id.QuestionsButton)
         SettingsButton = findViewById(R.id.SettingsButton)
         ResourcesButton = findViewById(R.id.ResourcesButton)
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        QuestionsButtion.setOnClickListener {
+        QuestionsButton.setOnClickListener {
             val intent = Intent(this, QuestionActivity::class.java)
             startActivity(intent)
         }
