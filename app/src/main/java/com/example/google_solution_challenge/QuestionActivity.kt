@@ -23,9 +23,13 @@ class QuestionActivity : AppCompatActivity() {
     var answerList = ArrayList<Answer>()
 
     // private var temp = "What can we help you with today?"
-    var questionArray = arrayOf("", "", "", "")
+    var questionArray = mutableListOf<String>()
     var answerIndex = arrayOf(-1, -1, -1, -1)
     var answerArray = arrayOf("null", "null", "null", "null")
+    val a1List = mutableListOf<String>()
+    val a2List = mutableListOf<String>()
+    val a3List = mutableListOf<String>()
+    val a4List = mutableListOf<String>()
     lateinit var answer1: Button
     lateinit var answer2: Button
     lateinit var answer3: Button
@@ -46,21 +50,44 @@ class QuestionActivity : AppCompatActivity() {
         val res = mutableListOf<String>()
 
         daily.get().addOnSuccessListener { querySnapshot ->
-            val questions = mutableListOf<String>()
-            querySnapshot.forEach { document ->
-                questions.add(document.data["Question"] as String)
-            }
-            res.addAll(questions.shuffled().take(2))
-            Log.d("COLLECTION", questions.shuffled().take(2).toString())
-            rotational.get().addOnSuccessListener { querySnapshot ->
-                val questions = mutableListOf<String>()
-                querySnapshot.forEach { document ->
-                    questions.add(document.data["Question"] as String)
+            val res = querySnapshot.shuffled().take(2)
+            res.forEach { document ->
+                val map: Map<String, Any> = document.data
+                questionArray.add(document.data["Question"] as String)
+                a1List.add(document.data["A1"] as String)
+                a2List.add(document.data["A2"] as String)
+                if (map.containsKey("A3")) {
+                    a3List.add(document.data["A3"] as String)
+                } else {
+                    a3List.add("null")
                 }
-                res.addAll(questions.shuffled().take(2))
-                questionArray = res.toTypedArray()
+                if (map.containsKey("A3")) {
+                    a4List.add(document.data["A4"] as String)
+                } else {
+                    a4List.add("null")
+                }
+            }
+            rotational.get().addOnSuccessListener { querySnapshot ->
+                val res = querySnapshot.shuffled().take(2)
+                res.forEach { document ->
+                    val map: Map<String, Any> = document.data
+                    questionArray.add(document.data["Question"] as String)
+                    a1List.add(document.data["A1"] as String)
+                    a2List.add(document.data["A2"] as String)
+                    if (map.containsKey("A3")) {
+                        a3List.add(document.data["A3"] as String)
+                    } else {
+                        a3List.add("null")
+                    }
+                    if (map.containsKey("A3")) {
+                        a4List.add(document.data["A4"] as String)
+                    } else {
+                        a4List.add("null")
+                    }
+                }
                 text = findViewById(R.id.promptQuestion)
                 text.text = questionArray[0]
+                initializeAnswers()
             }
         }
 
@@ -176,8 +203,36 @@ class QuestionActivity : AppCompatActivity() {
         question4.setOnClickListener { changeQuestion(4) }
     }
 
+    private fun initializeAnswers() {
+        answer1.text = a1List[0]
+        answer2.text = a2List[0]
+        if (a3List[0] == "null") {
+            answer3.visibility = View.INVISIBLE
+        } else {
+            answer3.text = a3List[0]
+        }
+        if (a4List[0] == "null") {
+            answer4.visibility = View.INVISIBLE
+        } else {
+            answer4.text = a4List[0]
+        }
+    }
+
+
     private fun updateQuestion() {
         text.text = questionArray[page - 1]
+        answer1.text = a1List[page - 1]
+        answer2.text = a2List[page - 1]
+        if (a3List[page - 1] == "null") {
+            answer3.visibility = View.INVISIBLE
+        } else {
+            answer3.text = a3List[page - 1]
+        }
+        if (a4List[page - 1] == "null") {
+            answer4.visibility = View.INVISIBLE
+        } else {
+            answer4.text = a4List[page - 1]
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
