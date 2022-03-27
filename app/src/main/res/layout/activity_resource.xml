@@ -12,7 +12,6 @@
         android:layout_width="302dp"
         android:layout_height="95dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/red_hat_text"
         android:text="You’re in the right place. Here are  some resources that might help: "
         android:textAlignment="center"
         android:textSize="24sp"

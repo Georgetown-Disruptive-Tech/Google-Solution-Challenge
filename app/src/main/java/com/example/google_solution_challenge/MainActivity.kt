@@ -1,35 +1,45 @@
 package com.example.google_solution_challenge
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.google_solution_challenge.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var JournalButton: Button
+    private lateinit var QuestionsButtion: Button
+    private lateinit var SettingsButton: Button
+    private lateinit var ResourcesButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        JournalButton = findViewById(R.id.JournalButton)
+        QuestionsButtion = findViewById(R.id.QuestionsButton)
+        SettingsButton = findViewById(R.id.SettingsButton)
+        ResourcesButton = findViewById(R.id.ResourcesButton)
 
-        val navView: BottomNavigationView = binding.navView
+        JournalButton.setOnClickListener {
+            val intent = Intent(this, JournalActivity::class.java)
+            startActivity(intent)
+        }
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        QuestionsButtion.setOnClickListener {
+            val intent = Intent(this, QuestionActivity::class.java)
+            startActivity(intent)
+        }
+
+        SettingsButton.setOnClickListener {
+
+        }
+
+        ResourcesButton.setOnClickListener {
+            val intent = Intent(this, ResourceActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 }

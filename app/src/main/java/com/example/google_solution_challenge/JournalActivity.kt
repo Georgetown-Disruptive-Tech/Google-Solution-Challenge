@@ -13,14 +13,14 @@ import com.example.hw5.Answer
 import java.time.LocalDate
 
 class JournalActivity : AppCompatActivity() {
-    lateinit var list: ListView
+    private lateinit var list: ListView
 
     @RequiresApi(Build.VERSION_CODES.O)
     var selectedDate = LocalDate.now().toString()
     lateinit var text: TextView
     private lateinit var calendar: CalendarView
 
-    lateinit var sharedPreferences: SharedPreferences
+    private lateinit var sharedPreferences: SharedPreferences
     var answerList = ArrayList<Answer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +53,13 @@ class JournalActivity : AppCompatActivity() {
     }
 
     private fun updateList() {
-        var sublist = ArrayList<Answer>()
+        val sublist = ArrayList<Answer>()
         for (a in answerList) {
             if (a.date == selectedDate) {
                 sublist.add(a)
             }
         }
-        var arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, sublist)
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, sublist)
         list.adapter = arrayAdapter
         arrayAdapter.notifyDataSetChanged()
     }

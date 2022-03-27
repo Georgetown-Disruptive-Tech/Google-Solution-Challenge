@@ -1,10 +1,10 @@
 package com.example.google_solution_challenge
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw5.Answer
@@ -16,6 +16,7 @@ class ResourceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
         setContentView(R.layout.activity_resource)
     }
 
@@ -25,6 +26,7 @@ class ResourceActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }//onCreateOptionsMenu
 
+    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.journalButton -> {
@@ -37,9 +39,11 @@ class ResourceActivity : AppCompatActivity() {
             }
         }
         return true
-    } //end onOptionsItemSelected
-    fun onClick(view: View)
-    {
+    }
+     */
+
+    //end onOptionsItemSelected
+    fun onClick(view: View) {
 
     }
 

@@ -9,7 +9,7 @@
 
     <TextView
         android:id="@+id/promptQuestion"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:fontFamily="@font/red_hat_text"

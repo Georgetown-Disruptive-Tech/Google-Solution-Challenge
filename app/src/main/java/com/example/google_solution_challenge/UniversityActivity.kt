@@ -1,6 +1,8 @@
 package com.example.google_solution_challenge
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,13 +19,20 @@ import com.google.firebase.ktx.Firebase
 class UniversityActivity : AppCompatActivity() {
 
     private lateinit var autoCompleteTextView: AutoCompleteTextView
-    lateinit var continueButton: Button
-    var selected = ""
+    private lateinit var continueButton: Button
+    private var selected = ""
+    private lateinit var sharedPreferences: SharedPreferences
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_university)
+
         autoCompleteTextView = findViewById(R.id.options)
         continueButton = findViewById(R.id.continueButton)
+
+        sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
+
 
         val db = Firebase.firestore
         val uniResources = db.collection("university-resources")
@@ -31,9 +40,13 @@ class UniversityActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
         continueButton.visibility = View.INVISIBLE
-        autoCompleteTextView.addTextChangedListener(object: TextWatcher {
+        autoCompleteTextView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 selected = s.toString()
+                with(sharedPreferences.edit()) {
+                    putString("University", s.toString())
+                    apply()
+                }
                 continueButton.visibility = View.VISIBLE
             }
 
@@ -49,12 +62,14 @@ class UniversityActivity : AppCompatActivity() {
 
             }
         })
+
+        continueButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
-    fun switchActivity(view : View){
-        val intent = Intent(this, QuestionActivity::class.java)
-        startActivity(intent)
-    }
     private fun getListOfUniversities(collection: CollectionReference) : MutableList<String> {
         val res = mutableListOf<String>()
         collection.get().addOnSuccessListener { querySnapshot ->
