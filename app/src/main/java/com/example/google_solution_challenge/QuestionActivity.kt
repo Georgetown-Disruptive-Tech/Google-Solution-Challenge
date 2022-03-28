@@ -39,7 +39,6 @@ class QuestionActivity : AppCompatActivity() {
     lateinit var question3: Button
     lateinit var question4: Button
     lateinit var text: TextView
-    var questionType = 0 // 0 -> 4 options, 1 -> 2 options
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +46,10 @@ class QuestionActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val daily = db.collection("daily-questions")
         val rotational = db.collection("rotational-questions")
-        val res = mutableListOf<String>()
+        val binary = db.collection("binary-questions")
+        //val res = mutableListOf<String>()
 
-        daily.get().addOnSuccessListener { querySnapshot ->
+        binary.get().addOnSuccessListener { querySnapshot ->
             val res = querySnapshot.shuffled().take(2)
             res.forEach { document ->
                 val map: Map<String, Any> = document.data
@@ -67,7 +67,9 @@ class QuestionActivity : AppCompatActivity() {
                     a4List.add("null")
                 }
             }
+
             rotational.get().addOnSuccessListener { querySnapshot ->
+                System.out.println("test")
                 val res = querySnapshot.shuffled().take(2)
                 res.forEach { document ->
                     val map: Map<String, Any> = document.data
@@ -85,9 +87,12 @@ class QuestionActivity : AppCompatActivity() {
                         a4List.add("null")
                     }
                 }
+
+
                 text = findViewById(R.id.promptQuestion)
                 text.text = questionArray[0]
-                initializeAnswers()
+                setupAnswers(0)
+
             }
         }
 
@@ -104,15 +109,7 @@ class QuestionActivity : AppCompatActivity() {
         question3 = findViewById(R.id.question3)
         question4 = findViewById(R.id.question4)
         question1.setTextColor(Color.BLACK)
-        if (questionType == 1)
-        {
-            answer3.visibility = View.INVISIBLE
-            answer4.visibility = View.INVISIBLE
-        }
-        else{
-            answer3.visibility = View.VISIBLE
-            answer4.visibility = View.VISIBLE
-        }
+
         answer1.setOnClickListener {
             when (page) {
                 1 -> {
@@ -203,18 +200,20 @@ class QuestionActivity : AppCompatActivity() {
         question4.setOnClickListener { changeQuestion(4) }
     }
 
-    private fun initializeAnswers() {
-        answer1.text = a1List[0]
-        answer2.text = a2List[0]
-        if (a3List[0] == "null") {
+    private fun setupAnswers(i : Int) {
+        answer1.text = a1List[i]
+        answer2.text = a2List[i]
+        if (a3List[i] == "null") {
             answer3.visibility = View.INVISIBLE
         } else {
-            answer3.text = a3List[0]
+            answer3.visibility = View.VISIBLE
+            answer3.text = a3List[i]
         }
-        if (a4List[0] == "null") {
+        if (a4List[i] == "null") {
             answer4.visibility = View.INVISIBLE
         } else {
-            answer4.text = a4List[0]
+            answer4.visibility = View.VISIBLE
+            answer4.text = a4List[i]
         }
     }
 
@@ -240,6 +239,7 @@ class QuestionActivity : AppCompatActivity() {
         if (page == 1) {
             page = 2
             updateQuestion()
+            setupAnswers(1)
             question1.setTextColor(Color.WHITE)
             question2.setTextColor(Color.BLACK)
             if (answerIndex[1] != -1) {
@@ -260,6 +260,7 @@ class QuestionActivity : AppCompatActivity() {
         {
             page = 3
             updateQuestion()
+            setupAnswers(2)
             question2.setTextColor(Color.WHITE)
             question3.setTextColor(Color.BLACK)
             if(answerIndex[2] != -1)
@@ -281,6 +282,7 @@ class QuestionActivity : AppCompatActivity() {
         {
             page = 4
             updateQuestion()
+            setupAnswers(3)
             question3.setTextColor(Color.WHITE)
             question4.setTextColor(Color.BLACK)
             if(answerIndex[3] != -1)
