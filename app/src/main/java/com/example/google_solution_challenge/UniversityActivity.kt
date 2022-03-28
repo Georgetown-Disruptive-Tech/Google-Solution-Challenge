@@ -36,7 +36,8 @@ class UniversityActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
         val uniResources = db.collection("university-resources")
-        val items = getListOfUniversities(uniResources)
+        val stateResources = db.collection("state-resources")
+        val items = getListOfItems(uniResources)
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
         continueButton.visibility = View.INVISIBLE
@@ -70,7 +71,8 @@ class UniversityActivity : AppCompatActivity() {
 
     }
 
-    private fun getListOfUniversities(collection: CollectionReference) : MutableList<String> {
+    //generalized
+    private fun getListOfItems(collection: CollectionReference) : MutableList<String> {
         val res = mutableListOf<String>()
         collection.get().addOnSuccessListener { querySnapshot ->
             querySnapshot.forEach { document ->

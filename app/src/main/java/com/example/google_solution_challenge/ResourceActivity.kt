@@ -41,6 +41,10 @@ class ResourceActivity : AppCompatActivity() {
                 answerList.clear()
                 data.edit().remove("answers").apply()
             }
+            R.id.homeButton ->{
+                intent.setClass(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
         return true
     }

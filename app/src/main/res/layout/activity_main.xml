@@ -44,12 +44,12 @@
             android:text="Resources" />
 
         <Button
-            android:id="@+id/SettingsButton"
+            android:id="@+id/ExportButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
             android:layout_weight="1"
-            android:text="Settings" />
+            android:text="Export Journal" />
 
     </LinearLayout>
 
