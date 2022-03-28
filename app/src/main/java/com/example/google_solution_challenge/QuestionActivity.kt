@@ -47,10 +47,9 @@ class QuestionActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val daily = db.collection("daily-questions")
         val rotational = db.collection("rotational-questions")
-        val binary = db.collection("binary-questions")
         //val res = mutableListOf<String>()
 
-        binary.get().addOnSuccessListener { querySnapshot ->
+        daily.get().addOnSuccessListener { querySnapshot ->
             val res = querySnapshot.shuffled().take(2)
             res.forEach { document ->
                 val map: Map<String, Any> = document.data
