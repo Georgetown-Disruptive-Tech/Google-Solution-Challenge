@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        setTitle("Health")
         JournalButton = findViewById(R.id.JournalButton)
         QuestionsButton = findViewById(R.id.QuestionsButton)
         ExportButton = findViewById(R.id.ExportButton)

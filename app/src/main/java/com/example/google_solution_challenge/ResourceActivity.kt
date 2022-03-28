@@ -32,6 +32,7 @@ class ResourceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resource)
+        setTitle("Resources")
         generalResourceButton = findViewById(R.id.generalResources)
         nationalResourceButton = findViewById(R.id.nationalResources)
         stateResourceButton = findViewById(R.id.stateResources)

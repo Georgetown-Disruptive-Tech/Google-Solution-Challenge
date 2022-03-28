@@ -27,7 +27,7 @@ class UniversityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_university)
-
+        setTitle("Health")
         autoCompleteTextView = findViewById(R.id.options)
         continueButton = findViewById(R.id.continueButton)
 

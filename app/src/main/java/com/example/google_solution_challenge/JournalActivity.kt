@@ -26,6 +26,7 @@ class JournalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
+        setTitle("Mental Journal")
         val sharedPreferences = getSharedPreferences("com.example.google_solution_challenge", Context.MODE_PRIVATE)
         text = findViewById(R.id.journal)
         text.text = "Journal Log\n$selectedDate"

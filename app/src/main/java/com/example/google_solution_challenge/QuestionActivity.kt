@@ -43,6 +43,7 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+        setTitle("Daily Questions")
         val db = Firebase.firestore
         val daily = db.collection("daily-questions")
         val rotational = db.collection("rotational-questions")
