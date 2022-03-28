@@ -37,7 +37,7 @@ class UniversityActivity : AppCompatActivity() {
         val db = Firebase.firestore
         val uniResources = db.collection("university-resources")
         val stateResources = db.collection("state-resources")
-        val items = getListOfItems(uniResources)
+        val items = getListOfItems(stateResources)
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         autoCompleteTextView.setAdapter(adapter)
         continueButton.visibility = View.INVISIBLE
@@ -65,6 +65,7 @@ class UniversityActivity : AppCompatActivity() {
         })
 
         continueButton.setOnClickListener {
+
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
