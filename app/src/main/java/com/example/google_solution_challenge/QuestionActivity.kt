@@ -3,6 +3,7 @@ package com.example.google_solution_challenge
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw5.Answer
 import java.lang.Exception
@@ -182,6 +184,7 @@ class QuestionActivity : AppCompatActivity() {
     fun updateQuestion(){
         text.setText(questionArray[page-1])
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onAnswer()
     {
         if(page == 1){
