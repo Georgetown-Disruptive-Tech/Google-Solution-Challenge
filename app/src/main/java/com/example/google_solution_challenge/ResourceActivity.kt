@@ -10,6 +10,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw5.Answer
 import com.google.firebase.firestore.ktx.firestore
@@ -184,6 +185,10 @@ class ResourceActivity : AppCompatActivity() {
                         Uri.parse(recommendedResourceURL) // missing 'http://' will cause crashed
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(intent)
+                }
+                else{
+                    Toast.makeText(this, "We don't have enough data to help you yet, please" +
+                            "keep answering the questions so we can better help you!", Toast.LENGTH_SHORT).show()
                 }
             }
 
