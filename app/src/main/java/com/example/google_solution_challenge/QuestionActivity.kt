@@ -108,7 +108,7 @@ class QuestionActivity : AppCompatActivity() {
         question2 = findViewById(R.id.question2)
         question3 = findViewById(R.id.question3)
         question4 = findViewById(R.id.question4)
-        question1.setTextColor(Color.BLACK)
+        question1.setTextColor(Color.parseColor("#1771BF"))
 
         answer1.setOnClickListener {
             when (page) {
@@ -241,7 +241,7 @@ class QuestionActivity : AppCompatActivity() {
             updateQuestion()
             setupAnswers(1)
             question1.setTextColor(Color.WHITE)
-            question2.setTextColor(Color.BLACK)
+            question2.setTextColor(Color.parseColor("#1771BF"))
             if (answerIndex[1] != -1) {
                 resetColor()
                 when (answerIndex[1]) {
@@ -262,7 +262,7 @@ class QuestionActivity : AppCompatActivity() {
             updateQuestion()
             setupAnswers(2)
             question2.setTextColor(Color.WHITE)
-            question3.setTextColor(Color.BLACK)
+            question3.setTextColor(Color.parseColor("#1771BF"))
             if(answerIndex[2] != -1)
             {
                 resetColor()
@@ -284,7 +284,7 @@ class QuestionActivity : AppCompatActivity() {
             updateQuestion()
             setupAnswers(3)
             question3.setTextColor(Color.WHITE)
-            question4.setTextColor(Color.BLACK)
+            question4.setTextColor(Color.parseColor("#1771BF"))
             if(answerIndex[3] != -1)
             {
                 resetColor()
@@ -343,7 +343,7 @@ class QuestionActivity : AppCompatActivity() {
     private fun changeQuestion(num: Int) {
         if (num == 1) {
             if(answerIndex[0] != -1 ) {
-                question1.setTextColor(Color.BLACK)
+                question1.setTextColor(Color.parseColor("#1771BF"))
                 question2.setTextColor(Color.WHITE)
                 question3.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
@@ -365,7 +365,7 @@ class QuestionActivity : AppCompatActivity() {
             }
         } else if (num == 2) {
             if(answerIndex[1] != -1|| answerIndex[0] != -1 ) {
-                question2.setTextColor(Color.BLACK)
+                question2.setTextColor(Color.parseColor("#1771BF"))
                 question1.setTextColor(Color.WHITE)
                 question3.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
@@ -387,7 +387,7 @@ class QuestionActivity : AppCompatActivity() {
             }
         } else if (num == 3) {
             if(answerIndex[2] != -1|| answerIndex[1] != -1 ) {
-                question3.setTextColor(Color.BLACK)
+                question3.setTextColor(Color.parseColor("#1771BF"))
                 question1.setTextColor(Color.WHITE)
                 question2.setTextColor(Color.WHITE)
                 question4.setTextColor(Color.WHITE)
@@ -411,7 +411,7 @@ class QuestionActivity : AppCompatActivity() {
         else if(num == 4)
         {
             if(answerIndex[3] != -1 || answerIndex[2] != -1) {
-                question4.setTextColor(Color.BLACK)
+                question4.setTextColor(Color.parseColor("#1771BF"))
                 question1.setTextColor(Color.WHITE)
                 question2.setTextColor(Color.WHITE)
                 question3.setTextColor(Color.WHITE)

@@ -85,7 +85,7 @@
             android:layout_height="110dp"
 
             android:layout_weight="1"
-            android:backgroundTint="#94CEF3"
+            android:backgroundTint="#82D0F7"
             android:text="1"
             android:textAlignment="center"
             android:textSize="60sp"
