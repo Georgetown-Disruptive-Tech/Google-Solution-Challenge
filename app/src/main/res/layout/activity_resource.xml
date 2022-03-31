@@ -5,6 +5,7 @@
     android:id="@+id/label"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".ResourceActivity">
 
     <TextView
@@ -24,54 +25,54 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/resource1"
+        android:id="@+id/nationalResources"
         android:layout_width="245dp"
         android:layout_height="95dp"
         android:layout_marginTop="35dp"
-        android:backgroundTint="#F2B705"
         android:onClick="onClick"
-        android:text="University Resources"
+        android:backgroundTint="#F2B705"
+        android:text="National Resources"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Button
-        android:id="@+id/resource2"
+        android:id="@+id/stateResources"
         android:layout_width="245dp"
         android:layout_height="95dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#2E83F2"
         android:onClick="onClick"
-        android:text="University Resources"
+        android:backgroundTint="#2E83F2"
+        android:text="State Resources"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resource1" />
+        app:layout_constraintTop_toBottomOf="@+id/nationalResources" />
 
     <Button
-        android:id="@+id/resource3"
+        android:id="@+id/generalResources"
         android:layout_width="245dp"
         android:layout_height="95dp"
         android:layout_marginTop="20dp"
+        android:onClick="onClick"
+        android:text="General Resources"
         android:backgroundTint="#F2B705"
-        android:onClick="onClick"
-        android:text="General Resources"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resource2" />
+        app:layout_constraintTop_toBottomOf="@+id/stateResources" />
 
     <Button
-        android:id="@+id/resource4"
+        android:id="@+id/recommendedResources"
         android:layout_width="245dp"
         android:layout_height="95dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#2E83F2"
         android:onClick="onClick"
-        android:text="General Resources"
+        android:backgroundTint="#2E83F2"
+        android:text="Recommended Resource (Currently none, please check back later)"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resource3" />
+        app:layout_constraintTop_toBottomOf="@+id/generalResources" />
 </androidx.constraintlayout.widget.ConstraintLayout>

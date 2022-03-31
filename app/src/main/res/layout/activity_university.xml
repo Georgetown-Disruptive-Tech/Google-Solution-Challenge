@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".UniversityActivity">
 
     <TextView
@@ -15,7 +16,7 @@
         android:layout_marginEnd="114dp"
         android:layout_marginBottom="23dp"
         android:fontFamily="@font/red_hat_text"
-        android:text="Choose your university below"
+        android:text="Choose your state below"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/menu"
@@ -32,7 +33,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="23dp"
         android:layout_marginEnd="32dp"
-        android:hint="Select University"
+        android:hint="Select State"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/promptUniversity"
@@ -56,7 +57,6 @@
         android:layout_marginBottom="342dp"
         android:backgroundTint="#2E83F2"
         android:fontFamily="@font/red_hat_text"
-        android:onClick="switchActivity"
         android:text="Continue"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

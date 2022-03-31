@@ -18,7 +18,6 @@ class LogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
 
-
         val tapRegister = findViewById<TextView>(R.id.tapRegister)
         tapRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
