@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hw5.Answer
 import com.google.firebase.firestore.ktx.firestore
@@ -38,21 +36,16 @@ class ResourceActivity : AppCompatActivity() {
         setContentView(R.layout.activity_resource)
         title = "Resources"
 
-        generalResourceButton = findViewById(R.id.generalResources)
-        nationalResourceButton = findViewById(R.id.nationalResources)
-        stateResourceButton = findViewById(R.id.stateResources)
-        recommendedResourceButton = findViewById(R.id.recommendedResources)
 
         sharedPreferences =
             getSharedPreferences("com.example.google_solution_challenge", Context.MODE_PRIVATE)
         answerList = ObjectSerializer.deserialize(
-            data
+            sharedPreferences
                 .getString("answers", ObjectSerializer.serialize(ArrayList<Answer>()))
         ) as ArrayList<Answer>
         val sublist = ArrayList<Answer>()
         val flag = arrayOf(0, 0, 0)
         val today = LocalDate.now().toString()
-        System.out.println(today)
         val calendar: Calendar = Calendar.getInstance()
         val format = SimpleDateFormat("yyyy-MM-dd")
         val date : Date? = format.parse(today)
@@ -62,20 +55,21 @@ class ResourceActivity : AppCompatActivity() {
         val yesterday: String = format.format(calendar.time)
         calendar.add(Calendar.DATE, -1)
         val twoDaysAgo: String = format.format(calendar.time)
-        //System.out.println(yesterdayAsString)
-        //System.out.println(twoDaysAgo)
+
         for (a in answerList) {
-            if (a.date == twoDaysAgo) {
-                sublist.add(a)
-                flag[0] = 1
-            }
-            else if (a.date == yesterday){
-                sublist.add(a)
-                flag[1] = 1
-            }
-            else if (a.date == today){
-                sublist.add(a)
-                flag[2] = 1
+            when (a.date) {
+                twoDaysAgo -> {
+                    sublist.add(a)
+                    flag[0] = 1
+                }
+                yesterday -> {
+                    sublist.add(a)
+                    flag[1] = 1
+                }
+                today -> {
+                    sublist.add(a)
+                    flag[2] = 1
+                }
             }
         }
         if(flag[0] == 1 && flag[1] == 1 && flag[2] == 1)
@@ -90,49 +84,17 @@ class ResourceActivity : AppCompatActivity() {
                 if(a.question.contains("performance") && (a.answer == "Always")) depressionMeter ++
                 if(a.question.contains("guilt") && (a.answer == "Always")) depressionMeter ++
                 if(a.question.contains("purging") && (a.answer == "Yes")) depressionMeter ++
-                if(a.question.contains("social") && (a.answer == "Always")) depressionMeter ++
-                if(a.question.contains("intake") && (a.answer == "Yes")) depressionMeter ++
+                if (a.question.contains("social") && (a.answer == "Always")) depressionMeter++
+                if (a.question.contains("intake") && (a.answer == "Yes")) depressionMeter++
             }
-            if (depressionMeter >= 4)
-            {
+            if (depressionMeter >= 4) {
                 recommendedResourceURL =
                     "https://www.everydayhealth.com/depression/guide/resources/"
                 recommendedResourceButton.text = "Recommended Resource - Depression"
             }
         }
-
-
-        val db = Firebase.firestore
-        val university = sharedPreferences.getString("University", "")
-        val generalResources = db.collection("general-resources")
-        val stateResources = university?.let { db.collection("state-resources").document(it) }
-        val nationalResources = db.collection("national-resources")
-
-
-        if (stateResources != null) {
-            stateResources.get().addOnSuccessListener { querySnapshot ->
-                val text = "State Resource - " + (querySnapshot.data?.get("Name") as String)
-                stateResourceURL = querySnapshot.data?.get("URL") as String
-                stateResourceButton.text = text
-            }
-        }
-        nationalResources.get().addOnSuccessListener { querySnapshot ->
-            val res = querySnapshot.shuffled().take(1)
-            res.forEach { document ->
-                val text = "National Resource - " + (document.data["Name"] as String)
-                nationalResourceURL = (document.data["URL"] as String)
-                nationalResourceButton.text = text
-            }
-        }
-        generalResources.get().addOnSuccessListener { querySnapshot ->
-            val res = querySnapshot.shuffled().take(1)
-            res.forEach { document ->
-                val text = "General Resource - " + (document.data["Name"] as String)
-                generalResourceURL = (document.data["URL"] as String)
-                generalResourceButton.text = text
-            }
-        }
-
+        initializeResources()
+        setOnClickListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -152,7 +114,7 @@ class ResourceActivity : AppCompatActivity() {
                 answerList.clear()
                 data.edit().remove("answers").apply()
             }
-            R.id.homeButton ->{
+            R.id.homeButton -> {
                 intent.setClass(this, MainActivity::class.java)
                 startActivity(intent)
             }
@@ -160,42 +122,85 @@ class ResourceActivity : AppCompatActivity() {
         return true
     }
 
-    //end onOptionsItemSelected
-    fun onClick(view: View) {
-        when(view.id){
-            R.id.nationalResources -> {
-                val uri: Uri = Uri.parse(nationalResourceURL) // missing 'http://' will cause crashed
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            }
-            R.id.stateResources -> {
-                val uri: Uri = Uri.parse(stateResourceURL) // missing 'http://' will cause crashed
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            }
-            R.id.generalResources -> {
-                val uri: Uri = Uri.parse(generalResourceURL) // missing 'http://' will cause crashed
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                startActivity(intent)
-            }
-            R.id.recommendedResources -> {
-                if(recommendedResourceURL != "") {
-                    var uri: Uri =
-                        Uri.parse(recommendedResourceURL) // missing 'http://' will cause crashed
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
-                else{
-                    Toast.makeText(this, "We don't have enough data to help you yet, please" +
-                            "keep answering the questions so we can better help you!", Toast.LENGTH_SHORT).show()
-                }
-            }
+    private fun initializeResources() {
 
+        generalResourceButton = findViewById(R.id.generalResources)
+        nationalResourceButton = findViewById(R.id.nationalResources)
+        stateResourceButton = findViewById(R.id.stateResources)
+        recommendedResourceButton = findViewById(R.id.recommendedResources)
 
+        val db = Firebase.firestore
+        val university = sharedPreferences.getString("University", "")
+        val generalResources = db.collection("general-resources")
+        val stateResources = db.collection("state-resources")
+        val nationalResources = db.collection("national-resources")
+
+        stateResources.get().addOnSuccessListener { // querySnapshot ->
+            //val text = "State Resource - " + (querySnapshot.data?.get("Name") as String)
+            //stateResourceURL = querySnapshot.data?.get("URL") as String
+            //stateResourceButton.text = text
         }
-
-
+        nationalResources.get().addOnSuccessListener { querySnapshot ->
+            val res = querySnapshot.shuffled().take(1)
+            res.forEach { document ->
+                val text = "National Resource - " + (document.data["Name"] as String)
+                nationalResourceURL = (document.data["URL"] as String)
+                nationalResourceButton.text = text
+            }
+        }
+        generalResources.get().addOnSuccessListener { querySnapshot ->
+            val res = querySnapshot.shuffled().take(1)
+            res.forEach { document ->
+                val text = "General Resource - " + (document.data["Name"] as String)
+                generalResourceURL = (document.data["URL"] as String)
+                generalResourceButton.text = text
+            }
+        }
     }
 
+    private fun setOnClickListeners() {
 
+        generalResourceButton = findViewById(R.id.generalResources)
+        nationalResourceButton = findViewById(R.id.nationalResources)
+        stateResourceButton = findViewById(R.id.stateResources)
+        recommendedResourceButton = findViewById(R.id.recommendedResources)
+
+        nationalResourceButton.setOnClickListener {
+            try {
+                val httpIntent = Intent(Intent.ACTION_VIEW)
+                httpIntent.data = Uri.parse(nationalResourceURL)
+                startActivity(httpIntent)
+            } catch (e: Exception) {
+                print(e.stackTrace)
+            }
+        }
+        stateResourceButton.setOnClickListener {
+            try {
+                val httpIntent = Intent(Intent.ACTION_VIEW)
+                httpIntent.data = Uri.parse(stateResourceURL)
+                startActivity(httpIntent)
+            } catch (e: Exception) {
+                print(e.stackTrace)
+            }
+        }
+        recommendedResourceButton.setOnClickListener {
+            try {
+                val httpIntent = Intent(Intent.ACTION_VIEW)
+                httpIntent.data = Uri.parse(recommendedResourceURL)
+                startActivity(httpIntent)
+            } catch (e: Exception) {
+                print(e.stackTrace)
+            }
+        }
+        generalResourceButton.setOnClickListener {
+            try {
+                var uri: Uri =
+                    Uri.parse(generalResourceURL) // missing 'http://' will cause crashed
+                val intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
+            } catch (e: Exception) {
+                print(e.stackTrace)
+            }
+        }
+    }
 }
