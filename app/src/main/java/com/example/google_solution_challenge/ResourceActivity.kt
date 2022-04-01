@@ -18,7 +18,6 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ResourceActivity : AppCompatActivity() {
@@ -37,16 +36,15 @@ class ResourceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_resource)
-        setTitle("Resources")
+        title = "Resources"
 
         generalResourceButton = findViewById(R.id.generalResources)
         nationalResourceButton = findViewById(R.id.nationalResources)
         stateResourceButton = findViewById(R.id.stateResources)
         recommendedResourceButton = findViewById(R.id.recommendedResources)
 
-        sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE)
-        data = getSharedPreferences("com.example.google_solution_challenge", Context.MODE_PRIVATE)
-        var answerList = ArrayList<Answer>()
+        sharedPreferences =
+            getSharedPreferences("com.example.google_solution_challenge", Context.MODE_PRIVATE)
         answerList = ObjectSerializer.deserialize(
             data
                 .getString("answers", ObjectSerializer.serialize(ArrayList<Answer>()))
@@ -59,11 +57,11 @@ class ResourceActivity : AppCompatActivity() {
         val format = SimpleDateFormat("yyyy-MM-dd")
         val date : Date? = format.parse(today)
 
-        calendar.setTime(date)
+        calendar.time = date
         calendar.add(Calendar.DATE, -1)
-        val yesterday: String = format.format(calendar.getTime())
+        val yesterday: String = format.format(calendar.time)
         calendar.add(Calendar.DATE, -1)
-        val twoDaysAgo :String = format.format(calendar.getTime())
+        val twoDaysAgo: String = format.format(calendar.time)
         //System.out.println(yesterdayAsString)
         //System.out.println(twoDaysAgo)
         for (a in answerList) {
@@ -97,8 +95,9 @@ class ResourceActivity : AppCompatActivity() {
             }
             if (depressionMeter >= 4)
             {
-                recommendedResourceURL = "https://www.everydayhealth.com/depression/guide/resources/"
-                recommendedResourceButton.setText("Recommended Resource - Depression")
+                recommendedResourceURL =
+                    "https://www.everydayhealth.com/depression/guide/resources/"
+                recommendedResourceButton.text = "Recommended Resource - Depression"
             }
         }
 
@@ -114,7 +113,7 @@ class ResourceActivity : AppCompatActivity() {
             stateResources.get().addOnSuccessListener { querySnapshot ->
                 val text = "State Resource - " + (querySnapshot.data?.get("Name") as String)
                 stateResourceURL = querySnapshot.data?.get("URL") as String
-                stateResourceButton.setText(text)
+                stateResourceButton.text = text
             }
         }
         nationalResources.get().addOnSuccessListener { querySnapshot ->
@@ -122,7 +121,7 @@ class ResourceActivity : AppCompatActivity() {
             res.forEach { document ->
                 val text = "National Resource - " + (document.data["Name"] as String)
                 nationalResourceURL = (document.data["URL"] as String)
-                nationalResourceButton.setText(text)
+                nationalResourceButton.text = text
             }
         }
         generalResources.get().addOnSuccessListener { querySnapshot ->
@@ -130,7 +129,7 @@ class ResourceActivity : AppCompatActivity() {
             res.forEach { document ->
                 val text = "General Resource - " + (document.data["Name"] as String)
                 generalResourceURL = (document.data["URL"] as String)
-                generalResourceButton.setText(text)
+                generalResourceButton.text = text
             }
         }
 

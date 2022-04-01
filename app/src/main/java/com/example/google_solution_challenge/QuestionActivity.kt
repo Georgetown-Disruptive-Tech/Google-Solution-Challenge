@@ -38,16 +38,17 @@ class QuestionActivity : AppCompatActivity() {
     lateinit var question2: Button
     lateinit var question3: Button
     lateinit var question4: Button
-    lateinit var text: TextView
+    lateinit var question: TextView
+    var questionType = 0 // 0 -> 4 options, 1 -> 2 options
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
-        setTitle("Daily Questions")
         val db = Firebase.firestore
         val daily = db.collection("daily-questions")
         val rotational = db.collection("rotational-questions")
-        //val res = mutableListOf<String>()
+        val res = mutableListOf<String>()
 
         daily.get().addOnSuccessListener { querySnapshot ->
             val res = querySnapshot.shuffled().take(2)
@@ -67,9 +68,7 @@ class QuestionActivity : AppCompatActivity() {
                     a4List.add("null")
                 }
             }
-
             rotational.get().addOnSuccessListener { querySnapshot ->
-                System.out.println("test")
                 val res = querySnapshot.shuffled().take(2)
                 res.forEach { document ->
                     val map: Map<String, Any> = document.data
@@ -87,12 +86,9 @@ class QuestionActivity : AppCompatActivity() {
                         a4List.add("null")
                     }
                 }
-
-
-                text = findViewById(R.id.promptQuestion)
-                text.text = questionArray[0]
-                setupAnswers(0)
-
+                question = findViewById(R.id.promptQuestion)
+                question.text = questionArray[0]
+                initializeAnswers()
             }
         }
 
@@ -108,8 +104,14 @@ class QuestionActivity : AppCompatActivity() {
         question2 = findViewById(R.id.question2)
         question3 = findViewById(R.id.question3)
         question4 = findViewById(R.id.question4)
-        question1.setTextColor(Color.parseColor("#1771BF"))
-
+        question1.setTextColor(Color.BLACK)
+        if (questionType == 1) {
+            answer3.visibility = View.INVISIBLE
+            answer4.visibility = View.INVISIBLE
+        } else {
+            answer3.visibility = View.VISIBLE
+            answer4.visibility = View.VISIBLE
+        }
         answer1.setOnClickListener {
             when (page) {
                 1 -> {
@@ -200,26 +202,24 @@ class QuestionActivity : AppCompatActivity() {
         question4.setOnClickListener { changeQuestion(4) }
     }
 
-    private fun setupAnswers(i : Int) {
-        answer1.text = a1List[i]
-        answer2.text = a2List[i]
-        if (a3List[i] == "null") {
+    private fun initializeAnswers() {
+        answer1.text = a1List[0]
+        answer2.text = a2List[0]
+        if (a3List[0] == "null") {
             answer3.visibility = View.INVISIBLE
         } else {
-            answer3.visibility = View.VISIBLE
-            answer3.text = a3List[i]
+            answer3.text = a3List[0]
         }
-        if (a4List[i] == "null") {
+        if (a4List[0] == "null") {
             answer4.visibility = View.INVISIBLE
         } else {
-            answer4.visibility = View.VISIBLE
-            answer4.text = a4List[i]
+            answer4.text = a4List[0]
         }
     }
 
 
     private fun updateQuestion() {
-        text.text = questionArray[page - 1]
+        question.text = questionArray[page - 1]
         answer1.text = a1List[page - 1]
         answer2.text = a2List[page - 1]
         if (a3List[page - 1] == "null") {
@@ -236,100 +236,82 @@ class QuestionActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onAnswer() {
-        if (page == 1) {
-            page = 2
-            updateQuestion()
-            setupAnswers(1)
-            question1.setTextColor(Color.WHITE)
-            question2.setTextColor(Color.parseColor("#1771BF"))
-            if (answerIndex[1] != -1) {
-                resetColor()
-                when (answerIndex[1]) {
-                    0 -> answer1.setBackgroundColor(Color.BLUE)
-                    1 -> answer2.setBackgroundColor(Color.BLUE)
-                    2 -> answer3.setBackgroundColor(Color.BLUE)
-                    3 -> answer4.setBackgroundColor(Color.BLUE)
+        when (page) {
+            1 -> {
+                page = 2
+                updateQuestion()
+                question1.setTextColor(Color.WHITE)
+                question2.setTextColor(Color.BLACK)
+                if (answerIndex[0] != -1) {
+
+                    when (answerIndex[0]) {
+                        0 -> answer1.setBackgroundColor(Color.BLUE)
+                        1 -> answer2.setBackgroundColor(Color.BLUE)
+                        2 -> answer3.setBackgroundColor(Color.BLUE)
+                        3 -> answer4.setBackgroundColor(Color.BLUE)
+                    }
                 }
-            }
-            else
-            {
                 resetColor()
             }
-        }
-        else if (page == 2)
-        {
-            page = 3
-            updateQuestion()
-            setupAnswers(2)
-            question2.setTextColor(Color.WHITE)
-            question3.setTextColor(Color.parseColor("#1771BF"))
-            if(answerIndex[2] != -1)
-            {
-                resetColor()
-                when(answerIndex[2]){
-                    0->answer1.setBackgroundColor(Color.BLUE)
-                    1->answer2.setBackgroundColor(Color.BLUE)
-                    2->answer3.setBackgroundColor(Color.BLUE)
-                    3->answer4.setBackgroundColor(Color.BLUE)
+            2 -> {
+                page = 3
+                updateQuestion()
+                question2.setTextColor(Color.WHITE)
+                question3.setTextColor(Color.BLACK)
+                if (answerIndex[1] != -1) {
+                    when (answerIndex[1]) {
+                        0 -> answer1.setBackgroundColor(Color.BLUE)
+                        1 -> answer2.setBackgroundColor(Color.BLUE)
+                        2 -> answer3.setBackgroundColor(Color.BLUE)
+                        3 -> answer4.setBackgroundColor(Color.BLUE)
+                    }
                 }
-            }
-            else
-            {
                 resetColor()
             }
-        }
-        else if (page == 3)
-        {
-            page = 4
-            updateQuestion()
-            setupAnswers(3)
-            question3.setTextColor(Color.WHITE)
-            question4.setTextColor(Color.parseColor("#1771BF"))
-            if(answerIndex[3] != -1)
-            {
-                resetColor()
-                when(answerIndex[3]){
-                    0->answer1.setBackgroundColor(Color.BLUE)
-                    1->answer2.setBackgroundColor(Color.BLUE)
-                    2->answer3.setBackgroundColor(Color.BLUE)
-                    3->answer4.setBackgroundColor(Color.BLUE)
+            3 -> {
+                page = 4
+                updateQuestion()
+                question3.setTextColor(Color.WHITE)
+                question4.setTextColor(Color.BLACK)
+                if (answerIndex[2] != -1) {
+                    when (answerIndex[2]) {
+                        0 -> answer1.setBackgroundColor(Color.BLUE)
+                        1 -> answer2.setBackgroundColor(Color.BLUE)
+                        2 -> answer3.setBackgroundColor(Color.BLUE)
+                        3 -> answer4.setBackgroundColor(Color.BLUE)
+                    }
                 }
-            }
-            else
-            {
                 resetColor()
             }
-        }
-        else if (page == 4)
-        {
-            for (i in answerIndex){
-                if (i == -1){
+            4 -> {
+                if (answerIndex.contains(-1)) {
                     return
                 }
+                val intent = Intent(this, ResourceActivity::class.java)
+                for (i in (0..3)) {
+                    val answer =
+                        Answer(LocalDate.now().toString(), questionArray[i], answerArray[i])
+                    answerList.add(answer)
+                }
+                sharedPreferences = getSharedPreferences(
+                    "com.example.google_solution_challenge",
+                    MODE_PRIVATE
+                )
+                var stored = ArrayList<Answer>()
+                try {
+                    stored = ObjectSerializer.deserialize(
+                        sharedPreferences
+                            .getString("answers", ObjectSerializer.serialize(ArrayList<Answer>()))
+                    ) as ArrayList<Answer>
+                } catch (e: Exception) {
+                    println("No data stored... proceeding")
+                }
+                answerList.addAll(stored)
+                sharedPreferences.edit()
+                    .putString("answers", ObjectSerializer.serialize(answerList))
+                    .apply()
+                startActivity(intent)
             }
-            val intent = Intent(this, ResourceActivity::class.java)
-            // store data
-            for (i in (0..3))
-            {
-                val answer = Answer(LocalDate.now().toString(), questionArray[i], answerArray[i])
-                answerList.add(answer)
-            }
-            sharedPreferences = getSharedPreferences("com.example.google_solution_challenge", MODE_PRIVATE)
-            //before storing data, read them first
-            var stored = ArrayList<Answer>()
-            try {
-                stored = ObjectSerializer.deserialize(
-                    sharedPreferences
-                        .getString("answers", ObjectSerializer.serialize(ArrayList<Answer>()))
-                ) as ArrayList<Answer>
-            } catch (e: Exception) {
-                println("No data stored... proceeding")
-            }
-            answerList.addAll(stored)
-            sharedPreferences.edit().putString("answers", ObjectSerializer.serialize(answerList))
-                .apply()
-            startActivity(intent)
-
         }
     }
 
@@ -341,97 +323,28 @@ class QuestionActivity : AppCompatActivity() {
     }
 
     private fun changeQuestion(num: Int) {
-        if (num == 1) {
-            if(answerIndex[0] != -1 ) {
-                question1.setTextColor(Color.parseColor("#1771BF"))
-                question2.setTextColor(Color.WHITE)
-                question3.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 1
-                updateQuestion()
-                if (answerIndex[0] != -1) {
-                    resetColor()
-                    when (answerIndex[0]) {
-                        0 -> answer1.setBackgroundColor(Color.BLUE)
-                        1 -> answer2.setBackgroundColor(Color.BLUE)
-                        2 -> answer3.setBackgroundColor(Color.BLUE)
-                        3 -> answer4.setBackgroundColor(Color.BLUE)
-                    }
-                }
-                else
-                {
-                    resetColor()
-                }
+        question.text = questionArray[num - 1]
+        question1.setTextColor(Color.WHITE)
+        question2.setTextColor(Color.WHITE)
+        question3.setTextColor(Color.WHITE)
+        question4.setTextColor(Color.WHITE)
+        page = num
+        updateQuestion()
+        when (num) {
+            1 -> {
+                question1.setTextColor(Color.BLACK)
             }
-        } else if (num == 2) {
-            if(answerIndex[1] != -1|| answerIndex[0] != -1 ) {
-                question2.setTextColor(Color.parseColor("#1771BF"))
-                question1.setTextColor(Color.WHITE)
-                question3.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 2
-                updateQuestion()
-                if (answerIndex[1] != -1) {
-                    resetColor()
-                    when (answerIndex[1]) {
-                        0 -> answer1.setBackgroundColor(Color.BLUE)
-                        1 -> answer2.setBackgroundColor(Color.BLUE)
-                        2 -> answer3.setBackgroundColor(Color.BLUE)
-                        3 -> answer4.setBackgroundColor(Color.BLUE)
-                    }
-                }
-                else
-                {
-                    resetColor()
-                }
+            2 -> {
+                question2.setTextColor(Color.BLACK)
             }
-        } else if (num == 3) {
-            if(answerIndex[2] != -1|| answerIndex[1] != -1 ) {
-                question3.setTextColor(Color.parseColor("#1771BF"))
-                question1.setTextColor(Color.WHITE)
-                question2.setTextColor(Color.WHITE)
-                question4.setTextColor(Color.WHITE)
-                page = 3
-                updateQuestion()
-                if (answerIndex[2] != -1) {
-                    resetColor()
-                    when (answerIndex[2]) {
-                        0 -> answer1.setBackgroundColor(Color.BLUE)
-                        1 -> answer2.setBackgroundColor(Color.BLUE)
-                        2 -> answer3.setBackgroundColor(Color.BLUE)
-                        3 -> answer4.setBackgroundColor(Color.BLUE)
-                    }
-                }
-                else
-                {
-                    resetColor()
-                }
+            3 -> {
+                question3.setTextColor(Color.BLACK)
+            }
+            4 -> {
+                question4.setTextColor(Color.BLACK)
             }
         }
-        else if(num == 4)
-        {
-            if(answerIndex[3] != -1 || answerIndex[2] != -1) {
-                question4.setTextColor(Color.parseColor("#1771BF"))
-                question1.setTextColor(Color.WHITE)
-                question2.setTextColor(Color.WHITE)
-                question3.setTextColor(Color.WHITE)
-                page = 4
-                updateQuestion()
-                if (answerIndex[3] != -1) {
-                    resetColor()
-                    when (answerIndex[3]) {
-                        0 -> answer1.setBackgroundColor(Color.BLUE)
-                        1 -> answer2.setBackgroundColor(Color.BLUE)
-                        2 -> answer3.setBackgroundColor(Color.BLUE)
-                        3 -> answer4.setBackgroundColor(Color.BLUE)
-                    }
-                }
-                else
-                {
-                    resetColor()
-                }
-            }
-        }
+
     }
 
     private fun getQuestions(res: MutableList<String>) {
